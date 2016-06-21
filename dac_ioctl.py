@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import
 
 import os
 import sys
@@ -42,24 +39,9 @@ def write_to_ioctl(writeData):
         bits_per_word = 8
         );
 
-   # print('spi_ioc: ' + str(SPI_IOC_MESSAGE(1)))    
-
     fcntl.ioctl(fd, 1075866368, transfer)
 
-
-if __name__ == "__main__" and __package__ is None:
-
-    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    os.sys.path.insert(1, parent_dir)
-
-    mod = __import__('dacPython')
-    sys.modules["dacPython"] = mod
-    # or just import it:
-    # import my_package
-
-    __package__='dacPython'
-
-    #from .submodule1.linux_spi_spidev  import spi_ioc_transfer, SPI_IOC_MESSAGE
+if __name__ == "__main__":
 
     DEBUG = True
     spi_max_speed = 5 * 100000
@@ -76,5 +58,5 @@ if __name__ == "__main__" and __package__ is None:
     write_to_ioctl([0x30, 0x0, 0x0])
     sleep(1)
     write_to_ioctl([0x3e, 0xa3, 0x70])	
-		
+    print "done"	
  
