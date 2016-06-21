@@ -33,7 +33,6 @@ def write_to_ioctl(writeData):
     fcntl.ioctl(fd, 1075866368, transfer)
 
 def calcOutput(val):
-  
     spi_max_speed = 5 * 100000
     v_ref = 2200
     Bits = 2**16
@@ -45,13 +44,16 @@ def calcOutput(val):
     return([byte0,byte1,byte2])
 
 if __name__ == "__main__":
-    DEBUG = True        
-    SPIDEV = '/dev/spidev'
-    spi_device = "%s%d.%d" % (SPIDEV, 0, 1)
-    fd = posix.open(spi_device, posix.O_RDWR)
+    try:
+        while(True):
+            output_set_mv = input('Enter set voltage 0-2200 (mV): ')
+            spi_device = "%s%d.%d" % ('/dev/spidev', 0, 1)
+            fd = posix.open(spi_device, posix.O_RDWR)
+            write_to_ioctl([0x30, 0x0, 0x0])
+            sleep(1)
+            write_dac = calcOutput(output_set_mv)
+            write_to_ioctl(write_dac)	
+            print "done"
     
-    write_to_ioctl([0x30, 0x0, 0x0])
-    sleep(1)
-    write_dac = calcOutput(2000)
-    write_to_ioctl(write_dac)	
-    print "done"
+    except (KeyboardInterrupt, Exception) as e:
+        print(e)
