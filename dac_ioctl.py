@@ -1,18 +1,13 @@
 #!/usr/bin/env python
 
-import os
-import sys
 import posix
-import spidev
 import fcntl
 import struct
 import ctypes
 import array
-import os.path
 from time import sleep
 
-class spi_ioc_transfer(ctypes.Structure):
-  
+class spi_ioc_transfer(ctypes.Structure):  
     _fields_ = [
         ("tx_buf", ctypes.c_uint64),
         ("rx_buf", ctypes.c_uint64),
@@ -23,7 +18,7 @@ class spi_ioc_transfer(ctypes.Structure):
         ("cs_change", ctypes.c_uint8),
         ("pad", ctypes.c_uint32)]
   
-    __slots__ = [name for name, type in _fields_]
+    #__slots__ = [name for name, type in _fields_]
 
 def write_to_ioctl(writeData):
     data = array.array('B', writeData).tostring()
